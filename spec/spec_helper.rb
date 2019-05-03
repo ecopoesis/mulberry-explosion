@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "mulberry/explosion"
+require "mulberry_explosion/mulberry_explosion"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
