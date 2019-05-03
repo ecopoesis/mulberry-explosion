@@ -1,6 +1,5 @@
+require "mulberry_explosion/data_capture"
+require "mulberry_explosion/statistics"
 require "mulberry_explosion/version"
 
-module MulberryExplosion
-  class Error < StandardError; end
-  # Your code goes here...
-end
+module MulberryExplosion; end
