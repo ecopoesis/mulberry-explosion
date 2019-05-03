@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module MulberryExplosion
   class Statistics
-
     attr_accessor :records
     attr_reader :total
 
@@ -9,20 +10,26 @@ module MulberryExplosion
       @records = {}
     end
 
-    def record(value, less:, greater:)
+    def add_record(value, less:, greater:)
       @records[value] = { less: less, greater: greater }
     end
 
     def less(value)
-      records[value][:less]
+      record(value)[:less]
     end
 
     def greater(value)
-      records[value][:greater]
+      record(value)[:greater]
     end
 
-    def between(a, b)
-      total - less(a) - greater(b)
+    def between(first, last)
+      total - less(first) - greater(last)
+    end
+
+    private
+
+    def record(value)
+      records.fetch(value) { raise ArgumentError.new("No statistic recorded for #{value}") }
     end
   end
 end

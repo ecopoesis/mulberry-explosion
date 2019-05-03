@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module MulberryExplosion
   class DataCapture
-
     attr_accessor :values, :count
 
     def initialize(max: 1000)
@@ -9,6 +10,9 @@ module MulberryExplosion
     end
 
     def add(value)
+      raise ArgumentError.new('Value must be a positive integer') if value < 0
+      raise ArgumentError.new("Value must be <= #{values.size - 1}") if value > values.size - 1
+
       @values[value] += 1
       @count += 1
     end
@@ -19,11 +23,11 @@ module MulberryExplosion
       right = count
 
       values.each_with_index do |value, index|
-        unless value == 0
-          right -= value
-          stats.record(index, less: left, greater: right)
-          left += value
-        end
+        next if value == 0
+
+        right -= value
+        stats.add_record(index, less: left, greater: right)
+        left += value
       end
 
       stats
